@@ -4,4 +4,5 @@
     <string name="new_game">New Game</string>
     <string name="load_game">Load Game</string>
     <string name="info">About</string>
+    <string name="desc">no content</string>
 </resources>
