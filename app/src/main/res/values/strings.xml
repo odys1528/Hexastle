@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Hexastle</string>
+    <string name="title">Hexastle</string>
+    <string name="new_game">New Game</string>
+    <string name="load_game">Load Game</string>
+    <string name="info">About</string>
+</resources>
