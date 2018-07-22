@@ -8,4 +8,8 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="NavBarItem">
+        <item name="android:fontFamily">@font/pixel</item>
+    </style>
+
 </resources>
