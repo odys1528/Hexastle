@@ -1,10 +1,12 @@
-package com.odys.hexastle;
+package com.odys.hexastle.services;
 
 import android.app.Service;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+
+import com.odys.hexastle.R;
 
 public class MusicService extends Service {
     private static MediaPlayer player;
@@ -40,7 +42,6 @@ public class MusicService extends Service {
         //start sticky means service will be explicity started and stopped
         return START_STICKY;
     }
-
 
     @Override
     public void onDestroy() {

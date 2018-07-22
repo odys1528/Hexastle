@@ -1,14 +1,15 @@
-package com.odys.hexastle
+package com.odys.hexastle.fragments
 
 import android.animation.AnimatorInflater
 import android.animation.AnimatorSet
-import android.media.MediaPlayer
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.content.res.ResourcesCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.odys.hexastle.R
+import com.odys.hexastle.services.MusicService
 import kotlinx.android.synthetic.main.fragment_main.*
 
 

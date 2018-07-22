@@ -1,11 +1,13 @@
-package com.odys.hexastle
+package com.odys.hexastle.activities
 
 import android.animation.AnimatorInflater
 import android.animation.AnimatorSet
-import android.support.v7.app.AppCompatActivity
-import android.os.Bundle
-import kotlinx.android.synthetic.main.fragment_main.*
 import android.content.Intent
+import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
+import com.odys.hexastle.R
+import com.odys.hexastle.services.MusicService
+import kotlinx.android.synthetic.main.fragment_main.*
 
 
 class SplashActivity : AppCompatActivity() {

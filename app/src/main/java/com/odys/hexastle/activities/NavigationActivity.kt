@@ -1,4 +1,4 @@
-package com.odys.hexastle
+package com.odys.hexastle.activities
 
 import android.animation.AnimatorInflater
 import android.animation.AnimatorSet
@@ -10,6 +10,11 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.Toast
+import com.odys.hexastle.R
+import com.odys.hexastle.fragments.GameFragment
+import com.odys.hexastle.fragments.InfoFragment
+import com.odys.hexastle.fragments.MainFragment
+import com.odys.hexastle.services.MusicService
 import kotlinx.android.synthetic.main.activity_start.*
 
 class NavigationActivity : AppCompatActivity() {
