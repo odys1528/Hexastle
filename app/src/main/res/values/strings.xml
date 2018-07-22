@@ -9,6 +9,13 @@
     <string name="stay_in_app">No</string>
     <string name="exit_question">Are you sure you want to exit?</string>
     <string name="about_title">About application</string>
+    <string name="save_game">Save game</string>
+    <string name="dont_save">Discard changes</string>
+    <string name="save_question">Do you want to save changes? Unsaved progress will be lost.</string>
+    <string name="game">Game</string>
+    <string name="leave_game">Leave game</string>
+    <string name="stay_in">Keep playing</string>
+    <string name="leave_question">Do you want to leave the game?</string>
 
     <string-array name="about_description">
         <item>Here will be description of game rules.</item>

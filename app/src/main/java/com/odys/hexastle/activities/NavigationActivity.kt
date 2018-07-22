@@ -10,13 +10,19 @@ import android.support.v4.app.Fragment
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.view.View
+import android.widget.Toast
 import com.odys.hexastle.R
 import com.odys.hexastle.fragments.GameFragment
 import com.odys.hexastle.fragments.InfoFragment
 import com.odys.hexastle.fragments.MainFragment
 import com.odys.hexastle.services.MusicService
 import com.odys.hexastle.utils.AppConstants
+import com.odys.hexastle.utils.AppConstants.Companion.GAME_STATE
+import com.odys.hexastle.utils.AppConstants.Companion.GAME_STATE_TAG
+import com.odys.hexastle.utils.AppConstants.Companion.LOAD_MODE
+import com.odys.hexastle.utils.AppConstants.Companion.MODE
 import com.odys.hexastle.utils.AppConstants.Companion.MUSIC_TURNED_ON
+import com.odys.hexastle.utils.AppConstants.Companion.NEW_MODE
 import com.odys.hexastle.utils.AppConstants.Companion.settings
 import kotlinx.android.synthetic.main.activity_start.*
 
@@ -36,18 +42,41 @@ class NavigationActivity : AppCompatActivity() {
 
         settings = getSharedPreferences(AppConstants.GAME_SETTINGS_TAG, Context.MODE_PRIVATE)
         AppConstants.editor = settings.edit()
+
         MUSIC_TURNED_ON = settings.getBoolean(AppConstants.MUSIC_SETTINGS_TAG, true)
         if(!MUSIC_TURNED_ON) MusicService.mute()
+
+        GAME_STATE = settings.getString(GAME_STATE_TAG, AppConstants.Companion.GameState.NEW.name)
     }
 
     override fun onBackPressed() {
-        if (activeFragment == "MainFragment") {
+        if (activeFragment == "GameFragment") {
+            leaveGame()
+        } else if (activeFragment == "MainFragment") {
             exit()
         } else {
             openFragment(MainFragment.newInstance())
             activeFragment = "MainFragment"
             navigationView.menu.getItem(0).isChecked = true
         }
+    }
+
+    private fun leaveGame() {
+        val alertDialog = AlertDialog.Builder(this)
+        alertDialog.setPositiveButton(getString(R.string.leave_game)) { _, _ -> saveGame() }
+        alertDialog.setNegativeButton(getString(R.string.stay_in), null)
+        alertDialog.setMessage(getString(R.string.leave_question))
+        alertDialog.setTitle(getString(R.string.game))
+        alertDialog.show()
+    }
+
+    private fun saveGame() {
+        val alertDialog = AlertDialog.Builder(this)
+        alertDialog.setPositiveButton(getString(R.string.save_game), null) //TODO save preferences, back to main
+        alertDialog.setNegativeButton(getString(R.string.dont_save), null) //TODO back to main
+        alertDialog.setMessage(getString(R.string.save_question))
+        alertDialog.setTitle(getString(R.string.game))
+        alertDialog.show()
     }
 
     private fun exit() {
@@ -76,15 +105,26 @@ class NavigationActivity : AppCompatActivity() {
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener {
         item -> when (item.itemId) {
             R.id.navigation_new -> {
-                val gameFragment = GameFragment.newInstance()
+                MODE = NEW_MODE
+                val gameFragment = GameFragment.newInstance(MODE)
                 openFragment(gameFragment)
                 activeFragment = "GameFragment"
+                if(GAME_STATE == AppConstants.Companion.GameState.SAVED.name)
+                    Toast.makeText(this, "Recent game is lost", Toast.LENGTH_SHORT).show()
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_load -> {
-                val gameFragment = GameFragment.newInstance()
+                if(GAME_STATE == AppConstants.Companion.GameState.SAVED.name) {
+                    Toast.makeText(this, "Recent game loaded", Toast.LENGTH_SHORT).show()
+                    MODE = LOAD_MODE
+                } else if(GAME_STATE == AppConstants.Companion.GameState.NEW.name) {
+                    Toast.makeText(this, "There is no previous game saved", Toast.LENGTH_SHORT).show()
+                    MODE = NEW_MODE
+                }
+                val gameFragment = GameFragment.newInstance(MODE)
                 openFragment(gameFragment)
                 activeFragment = "GameFragment"
+
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_info -> {
