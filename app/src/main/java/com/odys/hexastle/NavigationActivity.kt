@@ -1,8 +1,8 @@
 package com.odys.hexastle
 
-import android.animation.Animator
 import android.animation.AnimatorInflater
 import android.animation.AnimatorSet
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
@@ -11,7 +11,7 @@ import android.view.View
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_start.*
 
-class StartActivity : AppCompatActivity() {
+class NavigationActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,10 +25,12 @@ class StartActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         openFragment(MainFragment.newInstance())
-        val size = navigationView.menu.size() - 1
-        for (i in 0..size){
-            navigationView.menu.getItem(i).isChecked = false
-        }
+        navigationView.menu.getItem(0).isChecked = true
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        stopService(Intent(this, MusicService::class.java))
     }
 
     private fun splashAnimation() {

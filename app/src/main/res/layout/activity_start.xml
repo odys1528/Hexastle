@@ -8,7 +8,7 @@
     android:gravity="bottom"
     android:orientation="vertical"
     android:paddingTop="10dp"
-    tools:context=".StartActivity">
+    tools:context=".NavigationActivity">
 
     <FrameLayout
         android:id="@+id/fragmentContainer"

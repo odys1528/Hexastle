@@ -7,14 +7,26 @@
     android:background="@color/colorPrimary"
     android:gravity="bottom"
     android:orientation="vertical"
-    android:paddingTop="10dp"
-    tools:context=".StartActivity">
+    tools:context=".NavigationActivity">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/fragmentContainer"
-        android:orientation="vertical">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingTop="5dp">
+
+        <ImageView
+            android:id="@+id/soundImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_gravity="right"
+            android:paddingRight="20dp"
+            app:srcCompat="@drawable/ic_sound" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="120dp" />
 
         <ImageView
             android:id="@+id/splashImageView"
@@ -37,9 +49,6 @@
             android:textColor="@android:color/white"
             android:textSize="80sp" />
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="100dp" />
     </LinearLayout>
 
 </LinearLayout>
