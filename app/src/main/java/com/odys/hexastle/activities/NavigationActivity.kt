@@ -9,7 +9,6 @@ import android.support.v4.app.Fragment
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.view.View
-import android.widget.Toast
 import com.odys.hexastle.R
 import com.odys.hexastle.fragments.GameFragment
 import com.odys.hexastle.fragments.InfoFragment
@@ -67,21 +66,18 @@ class NavigationActivity : AppCompatActivity() {
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener {
         item -> when (item.itemId) {
             R.id.navigation_new -> {
-                Toast.makeText(applicationContext, "navigation new", Toast.LENGTH_SHORT).show()
                 val gameFragment = GameFragment.newInstance()
                 openFragment(gameFragment)
                 activeFragment = "GameFragment"
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_load -> {
-                Toast.makeText(applicationContext, "navigation load", Toast.LENGTH_SHORT).show()
                 val gameFragment = GameFragment.newInstance()
                 openFragment(gameFragment)
                 activeFragment = "GameFragment"
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_info -> {
-                Toast.makeText(applicationContext, "navigation info", Toast.LENGTH_SHORT).show()
                 val infoFragment = InfoFragment.newInstance()
                 openFragment(infoFragment)
                 activeFragment = "InfoFragment"

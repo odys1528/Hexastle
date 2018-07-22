@@ -8,4 +8,12 @@
     <string name="close_app">Yes</string>
     <string name="stay_in_app">No</string>
     <string name="exit_question">Are you sure you want to exit?</string>
+    <string name="about_title">About application</string>
+
+    <string-array name="about_description">
+        <item>Here will be description of game rules.</item>
+        <item>In Hexastle you can build castles and other lands out of hex-puzzles.</item>
+        <item>It is possible also to make custom pieces.</item>
+        <item>Game state can be saved.</item>
+    </string-array>
 </resources>
