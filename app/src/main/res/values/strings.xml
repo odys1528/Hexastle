@@ -5,4 +5,7 @@
     <string name="load_game">Load Game</string>
     <string name="info">About</string>
     <string name="desc">no content</string>
+    <string name="close_app">Yes</string>
+    <string name="stay_in_app">No</string>
+    <string name="exit_question">Are you sure you want to exit?</string>
 </resources>

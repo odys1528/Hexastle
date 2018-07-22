@@ -3,15 +3,18 @@ package com.odys.hexastle
 import android.animation.AnimatorInflater
 import android.animation.AnimatorSet
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
+import android.support.v7.app.AlertDialog
+import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_start.*
 
 class NavigationActivity : AppCompatActivity() {
+
+    private var activeFragment = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,8 +27,22 @@ class NavigationActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        openFragment(MainFragment.newInstance())
-        navigationView.menu.getItem(0).isChecked = true
+        if (activeFragment == "MainFragment") {
+            exit()
+        } else {
+            openFragment(MainFragment.newInstance())
+            activeFragment = "MainFragment"
+            navigationView.menu.getItem(0).isChecked = true
+        }
+    }
+
+    private fun exit() {
+        val alertDialog = AlertDialog.Builder(this)
+        alertDialog.setPositiveButton(getString(R.string.close_app)) { _, _ -> finish() }
+        alertDialog.setNegativeButton(getString(R.string.stay_in_app), null)
+        alertDialog.setMessage(getString(R.string.exit_question))
+        alertDialog.setTitle(getString(R.string.app_name))
+        alertDialog.show()
     }
 
     override fun onDestroy() {
@@ -48,18 +65,21 @@ class NavigationActivity : AppCompatActivity() {
                 Toast.makeText(applicationContext, "navigation new", Toast.LENGTH_SHORT).show()
                 val gameFragment = GameFragment.newInstance()
                 openFragment(gameFragment)
+                activeFragment = "GameFragment"
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_load -> {
                 Toast.makeText(applicationContext, "navigation load", Toast.LENGTH_SHORT).show()
                 val gameFragment = GameFragment.newInstance()
                 openFragment(gameFragment)
+                activeFragment = "GameFragment"
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_info -> {
                 Toast.makeText(applicationContext, "navigation info", Toast.LENGTH_SHORT).show()
                 val infoFragment = InfoFragment.newInstance()
                 openFragment(infoFragment)
+                activeFragment = "InfoFragment"
                 return@OnNavigationItemSelectedListener true
             }
         }
