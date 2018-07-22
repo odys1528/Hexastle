@@ -19,6 +19,8 @@ public class MusicService extends Service {
         player.setVolume(1f, 1f);
     }
 
+    public static void start() { player.start(); }
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -29,14 +31,10 @@ public class MusicService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         //getting systems default ringtone
         player = MediaPlayer.create(this, R.raw.deguello);
-        player.seekTo(8500);
 
         //setting loop play to true
         //this will make the ringtone continuously playing
         player.setLooping(true);
-
-        //staring the player
-        player.start();
 
         //we have some options for service
         //start sticky means service will be explicity started and stopped

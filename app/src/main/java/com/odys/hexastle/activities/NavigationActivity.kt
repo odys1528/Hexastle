@@ -2,6 +2,7 @@ package com.odys.hexastle.activities
 
 import android.animation.AnimatorInflater
 import android.animation.AnimatorSet
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
@@ -14,6 +15,9 @@ import com.odys.hexastle.fragments.GameFragment
 import com.odys.hexastle.fragments.InfoFragment
 import com.odys.hexastle.fragments.MainFragment
 import com.odys.hexastle.services.MusicService
+import com.odys.hexastle.utils.AppConstants
+import com.odys.hexastle.utils.AppConstants.Companion.MUSIC_TURNED_ON
+import com.odys.hexastle.utils.AppConstants.Companion.settings
 import kotlinx.android.synthetic.main.activity_start.*
 
 class NavigationActivity : AppCompatActivity() {
@@ -23,11 +27,17 @@ class NavigationActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start)
+        MusicService.start()
 
         this.onBackPressed()
         navigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
         splashAnimation()
+
+        settings = getSharedPreferences(AppConstants.GAME_SETTINGS_TAG, Context.MODE_PRIVATE)
+        AppConstants.editor = settings.edit()
+        MUSIC_TURNED_ON = settings.getBoolean(AppConstants.MUSIC_SETTINGS_TAG, true)
+        if(!MUSIC_TURNED_ON) MusicService.mute()
     }
 
     override fun onBackPressed() {
