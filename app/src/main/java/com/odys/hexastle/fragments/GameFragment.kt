@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.odys.hexastle.R
 import com.odys.hexastle.utils.AppConstants
+import com.odys.hexastle.utils.AppConstants.Companion.GAME_STATE
 import com.odys.hexastle.utils.AppConstants.Companion.GAME_STATE_TAG
 import com.odys.hexastle.utils.AppConstants.Companion.LOAD_MODE
 import com.odys.hexastle.utils.AppConstants.Companion.NEW_MODE
@@ -26,6 +27,7 @@ class GameFragment : Fragment() {
             Toast.makeText(context, "New game is created", Toast.LENGTH_SHORT).show()
             editor.putString(GAME_STATE_TAG, AppConstants.Companion.GameState.NEW.name)
             editor.apply()
+            GAME_STATE = AppConstants.Companion.GameState.NEW.name
         } else if (mode == LOAD_MODE) {
             Toast.makeText(context, "Loaded last game", Toast.LENGTH_SHORT).show()
         }

@@ -16,6 +16,10 @@
     <string name="leave_game">Leave game</string>
     <string name="stay_in">Keep playing</string>
     <string name="leave_question">Do you want to leave the game?</string>
+    <string name="new_ok">That\'s ok</string>
+    <string name="last_game_lost">Recent game is lost</string>
+    <string name="cancel">Cancel</string>
+    <string name="override_question">You have some recent game saved. If you create a new one, saved progress will be lost.</string>
 
     <string-array name="about_description">
         <item>Here will be description of game rules.</item>
