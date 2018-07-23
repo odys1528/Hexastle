@@ -1,5 +1,8 @@
 package com.odys.hexastle.fragments
 
+import android.animation.Animator
+import android.animation.ValueAnimator
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -7,9 +10,13 @@ import android.support.v7.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.LinearInterpolator
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.Toast
 import com.odys.hexastle.R
+import com.odys.hexastle.activities.TileCreatorActivity
+import com.odys.hexastle.activities.WorldCreatorActivity
 import com.odys.hexastle.utils.AppConstants
 import com.odys.hexastle.utils.AppConstants.Companion.GAME_STATE
 import com.odys.hexastle.utils.AppConstants.Companion.GAME_STATE_TAG
@@ -26,11 +33,15 @@ class GameFragment : Fragment() {
         checkGameState()
 
         tileCreatorButton.setOnClickListener {
-            Toast.makeText(context, getString(R.string.tile_creator_title), Toast.LENGTH_SHORT).show()
+            val intent = Intent(context, TileCreatorActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+            navbarAnimation(intent)
         }
 
         worldCreatorButton.setOnClickListener {
-            Toast.makeText(context, getString(R.string.world_creator_title), Toast.LENGTH_SHORT).show()
+            val intent = Intent(context, WorldCreatorActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+            navbarAnimation(intent)
         }
 
         disableButton(tileCreatorButton)
@@ -61,6 +72,34 @@ class GameFragment : Fragment() {
                 newOrSaved()
             }
         }
+    }
+
+    private fun navbarAnimation(intent: Intent) {
+        val navbarLayout = activity.findViewById<LinearLayout>(R.id.navbarLayout)
+        val valueAnimator = ValueAnimator.ofFloat(1f, 0f)
+        valueAnimator.addUpdateListener {
+            val value = it.animatedValue as Float
+            navbarLayout.alpha = value
+        }
+        valueAnimator.interpolator = LinearInterpolator()
+        valueAnimator.duration = 1000L
+        valueAnimator.start()
+
+        valueAnimator.addListener(object : Animator.AnimatorListener {
+            override fun onAnimationRepeat(p0: Animator?) {
+            }
+
+            override fun onAnimationEnd(p0: Animator?) {
+                startActivity(intent)
+            }
+
+            override fun onAnimationCancel(p0: Animator?) {
+            }
+
+            override fun onAnimationStart(p0: Animator?) {
+            }
+
+        })
     }
 
     private fun checkGameState() {

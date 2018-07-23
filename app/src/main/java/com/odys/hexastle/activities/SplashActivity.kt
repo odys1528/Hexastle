@@ -37,11 +37,11 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun splashAnimation() {
-        val titleAnimatorSet = AnimatorInflater.loadAnimator(this, R.animator.vanish)
+        val titleAnimatorSet = AnimatorInflater.loadAnimator(this, R.animator.appear)
                 as AnimatorSet
         titleAnimatorSet.setTarget(titleTextView)
 
-        val imageAnimatorSet = AnimatorInflater.loadAnimator(this, R.animator.vanish)
+        val imageAnimatorSet = AnimatorInflater.loadAnimator(this, R.animator.appear)
                 as AnimatorSet
         imageAnimatorSet.setTarget(splashImageView)
 

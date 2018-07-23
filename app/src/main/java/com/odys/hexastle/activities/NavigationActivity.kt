@@ -103,7 +103,7 @@ class NavigationActivity : AppCompatActivity() {
 
     private fun splashAnimation() {
         navbarLayout.visibility = View.VISIBLE
-        val barAnimatorSet = AnimatorInflater.loadAnimator(this, R.animator.vanish)
+        val barAnimatorSet = AnimatorInflater.loadAnimator(this, R.animator.appear)
                 as AnimatorSet
         barAnimatorSet.setTarget(navbarLayout)
         barAnimatorSet.duration = 2000L

@@ -47,7 +47,7 @@ class MainFragment : Fragment() {
     }
 
     private fun soundImageAnimation() {
-        val soundImageAnimatorSet = AnimatorInflater.loadAnimator(context, R.animator.vanish)
+        val soundImageAnimatorSet = AnimatorInflater.loadAnimator(context, R.animator.appear)
                 as AnimatorSet
         soundImageAnimatorSet.setTarget(soundImageView)
         soundImageAnimatorSet.duration = 1000L
