@@ -8,11 +8,10 @@
 
     <TextView
         android:id="@+id/titleTextView"
+        android:theme="@style/hexastle_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/pixel"
         android:text="@string/about_title"
-        android:textColor="@android:color/white"
         android:textSize="50sp" />
 
     <Space
@@ -21,11 +20,10 @@
 
     <TextView
         android:id="@+id/infoTextView"
+        android:theme="@style/hexastle_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/pixel"
         android:maxLines="25"
         android:scrollbars="vertical"
-        android:textColor="@android:color/white"
         android:textSize="40sp" />
 </LinearLayout>
