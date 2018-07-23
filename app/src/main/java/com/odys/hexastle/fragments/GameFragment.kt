@@ -13,6 +13,7 @@ import com.odys.hexastle.utils.AppConstants.Companion.GAME_STATE_TAG
 import com.odys.hexastle.utils.AppConstants.Companion.LOAD_MODE
 import com.odys.hexastle.utils.AppConstants.Companion.NEW_MODE
 import com.odys.hexastle.utils.AppConstants.Companion.editor
+import kotlinx.android.synthetic.main.fragment_game.*
 
 class GameFragment : Fragment() {
 
@@ -20,6 +21,14 @@ class GameFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         checkGameState()
+
+        tileCreatorButton.setOnClickListener {
+            Toast.makeText(context, getString(R.string.tile_creator_title), Toast.LENGTH_SHORT).show()
+        }
+
+        worldCreatorButton.setOnClickListener {
+            Toast.makeText(context, getString(R.string.world_creator_title), Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun checkGameState() {
