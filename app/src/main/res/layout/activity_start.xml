@@ -21,16 +21,17 @@
         android:id="@+id/navbarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
         android:orientation="vertical"
         android:visibility="invisible">
 
         <android.support.design.widget.BottomNavigationView
             android:id="@+id/navigationView"
-            android:theme="@style/NavBarItem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="0dp"
             android:layout_marginStart="0dp"
+            android:theme="@style/NavBarItem"
             app:itemBackground="@color/colorPrimaryDark"
             app:itemIconTint="@android:color/white"
             app:itemTextColor="@android:color/white"

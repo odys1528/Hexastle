@@ -2,14 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navigation_new"
+        android:id="@+id/navigation_start"
         android:icon="@drawable/ic_new"
-        android:title="@string/new_game"/>
-
-    <item
-        android:id="@+id/navigation_load"
-        android:icon="@drawable/ic_last"
-        android:title="@string/load_game"/>
+        android:title="@string/start_game"/>
 
     <item
         android:id="@+id/navigation_info"

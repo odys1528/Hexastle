@@ -1,8 +1,6 @@
 <resources>
     <string name="app_name">Hexastle</string>
     <string name="title">Hexastle</string>
-    <string name="new_game">New Game</string>
-    <string name="load_game">Load Game</string>
     <string name="info">About</string>
     <string name="desc">no content</string>
     <string name="close_app">Yes</string>
@@ -16,14 +14,20 @@
     <string name="leave_game">Leave game</string>
     <string name="stay_in">Keep playing</string>
     <string name="leave_question">Do you want to leave the game?</string>
-    <string name="new_ok">That\'s ok</string>
+    <string name="new_ok">That\'s OK</string>
     <string name="last_game_lost">Recent game is lost</string>
     <string name="cancel">Cancel</string>
     <string name="override_question">You have some recent game saved. If you create a new one, saved progress will be lost.</string>
     <string name="tile_creator_title">Tile Creator</string>
-    <string name="tile_creator_desc">Create new tiles from additional pieces and use them in World Creator</string>
+    <string name="tile_creator_desc">Create new tiles from additional pieces and use them in World Creator.</string>
     <string name="world_creator_title">World Creator</string>
-    <string name="world_creator_desc">Create hexagonal world using ready tiles or created in Tile Creator</string>
+    <string name="world_creator_desc">Create hexagonal world using ready tiles or created in Tile Creator.</string>
+    <string name="start_game">Start game</string>
+    <string name="new_game">New game</string>
+    <string name="load_game">Load game</string>
+    <string name="no_saved_game">There is no last game saved.</string>
+    <string name="new_game_created">New game is created.</string>
+    <string name="last_game_load">Loaded last game.</string>
 
     <string-array name="about_description">
         <item>Here will be description of game rules.</item>
