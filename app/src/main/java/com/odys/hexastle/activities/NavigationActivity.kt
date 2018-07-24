@@ -57,6 +57,7 @@ class NavigationActivity : AppCompatActivity() {
     private fun backToMain() {
         openFragment(MainFragment.newInstance())
         activeFragment = "MainFragment"
+        navigationView.menu.getItem(0).isEnabled= true
         navigationView.menu.getItem(0).isChecked = true
     }
 
@@ -71,17 +72,17 @@ class NavigationActivity : AppCompatActivity() {
 
     private fun saveGame() {
         val alertDialog = AlertDialog.Builder(this)
-        alertDialog.setPositiveButton(getString(R.string.save_game), {_, _ ->
+        alertDialog.setPositiveButton(getString(R.string.save_game)) { _, _ ->
             editor.putString(GAME_STATE_TAG, AppConstants.Companion.GameState.SAVED.name)
             editor.apply()
             GAME_STATE = AppConstants.Companion.GameState.SAVED.name
             backToMain()
             Toast.makeText(this, "Game is saved", Toast.LENGTH_SHORT).show()
-        })
-        alertDialog.setNegativeButton(getString(R.string.dont_save), {_,_ ->
+        }
+        alertDialog.setNegativeButton(getString(R.string.dont_save)) { _, _ ->
             Toast.makeText(this, "Changes discarded", Toast.LENGTH_SHORT).show()
             backToMain()
-        })
+        }
         alertDialog.setMessage(getString(R.string.save_question))
         alertDialog.setTitle(getString(R.string.game))
         alertDialog.show()

@@ -20,7 +20,6 @@ import com.odys.hexastle.activities.WorldCreatorActivity
 import com.odys.hexastle.utils.AppConstants
 import com.odys.hexastle.utils.AppConstants.Companion.GAME_STATE
 import com.odys.hexastle.utils.AppConstants.Companion.GAME_STATE_TAG
-import com.odys.hexastle.utils.AppConstants.Companion.LOAD_MODE
 import com.odys.hexastle.utils.AppConstants.Companion.NEW_MODE
 import com.odys.hexastle.utils.AppConstants.Companion.editor
 import kotlinx.android.synthetic.main.fragment_game.*
@@ -30,67 +29,82 @@ class GameFragment : Fragment() {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        checkGameState()
-
-        tileCreatorButton.setOnClickListener {
-            val intent = Intent(context, TileCreatorActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
-            navbarAnimation(intent)
-        }
-
-        worldCreatorButton.setOnClickListener {
-            val intent = Intent(context, WorldCreatorActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
-            navbarAnimation(intent)
-        }
-
-        disableButton(tileCreatorButton)
-        disableButton(worldCreatorButton)
-        checkGameState()
-
-        loadGameButton.setOnClickListener {
-            if(loadGameButton.isEnabled) {
-                Toast.makeText(context, getString(R.string.last_game_load), Toast.LENGTH_SHORT).show()
-                GAME_STATE = AppConstants.Companion.GameState.SAVED.name
-                editor.putString(GAME_STATE_TAG, GAME_STATE)
-                editor.apply()
-                AppConstants.MODE = LOAD_MODE
-                enableButton(tileCreatorButton)
-                enableButton(worldCreatorButton)
-            } else {
-                Toast.makeText(context, getString(R.string.no_saved_game), Toast.LENGTH_SHORT).show()
+        startButton.setOnClickListener {
+            if(tileCreatorLayout.alpha == 1f) {
+                val intent = Intent(context, TileCreatorActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+                navbarAnimation(intent)
+            } else if(worldCreatorButton.alpha == 1f) {
+                val intent = Intent(context, WorldCreatorActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+                navbarAnimation(intent)
             }
         }
 
-        newGameButton.setOnClickListener {
-            if (GAME_STATE == AppConstants.Companion.GameState.NEW.name){
-                Toast.makeText(context, getString(R.string.new_game_created), Toast.LENGTH_SHORT).show()
-                disableButton(loadGameButton)
-                enableButton(tileCreatorButton)
-                enableButton(worldCreatorButton)
-            } else {
-                newOrSaved()
-            }
+        disableButton(startButton)
+        disableButton(resetGameButton)
+
+        tileCreatorLayout.setOnClickListener {
+            tileCreatorLayout.alpha = 1f
+            tileBorderLayout.background = resources.getDrawable(R.drawable.border)
+            worldBorderLayout.setBackgroundResource(0)
+            worldCreatorLayout.alpha = 0.5f
+            enableButton(startButton)
+            enableButton(resetGameButton)
+        }
+
+        worldCreatorLayout.setOnClickListener {
+            worldCreatorLayout.alpha = 1f
+            worldBorderLayout.background = resources.getDrawable(R.drawable.border)
+            tileBorderLayout.setBackgroundResource(0)
+            tileCreatorLayout.alpha = 0.5f
+            enableButton(startButton)
+            enableButton(resetGameButton)
+        }
+
+        mainLayout.setOnClickListener {
+            worldCreatorLayout.alpha = 1f
+            tileCreatorLayout.alpha = 1f
+            disableButton(startButton)
+            disableButton(resetGameButton)
+            tileBorderLayout.setBackgroundResource(0)
+            worldBorderLayout.setBackgroundResource(0)
         }
     }
 
     private fun navbarAnimation(intent: Intent) {
         val navbarLayout = activity.findViewById<LinearLayout>(R.id.navbarLayout)
+        val variantsLayout = activity.findViewById<LinearLayout>(R.id.variantsLayout)
+        val resetButton = activity.findViewById<Button>(R.id.resetGameButton)
+
         val valueAnimator = ValueAnimator.ofFloat(1f, 0f)
         valueAnimator.addUpdateListener {
             val value = it.animatedValue as Float
             navbarLayout.alpha = value
+            variantsLayout.alpha = value
+            startButton.alpha = value
+            resetButton.alpha = value
         }
         valueAnimator.interpolator = LinearInterpolator()
+        valueAnimator.repeatMode = ValueAnimator.REVERSE
+        valueAnimator.repeatCount = 1
         valueAnimator.duration = 1000L
         valueAnimator.start()
 
         valueAnimator.addListener(object : Animator.AnimatorListener {
             override fun onAnimationRepeat(p0: Animator?) {
+                navbarLayout.visibility = View.INVISIBLE
+                variantsLayout.visibility = View.INVISIBLE
+                startButton.visibility = View.INVISIBLE
+                resetButton.visibility = View.INVISIBLE
+                startActivity(intent)
             }
 
             override fun onAnimationEnd(p0: Animator?) {
-                startActivity(intent)
+                navbarLayout.visibility = View.VISIBLE
+                variantsLayout.visibility = View.VISIBLE
+                startButton.visibility = View.VISIBLE
+                resetButton.visibility = View.VISIBLE
             }
 
             override fun onAnimationCancel(p0: Animator?) {
@@ -100,11 +114,6 @@ class GameFragment : Fragment() {
             }
 
         })
-    }
-
-    private fun checkGameState() {
-        if(GAME_STATE == AppConstants.Companion.GameState.SAVED.name) enableButton(loadGameButton)
-        else disableButton(loadGameButton)
     }
 
     private fun enableButton(button: Button) {
@@ -119,15 +128,13 @@ class GameFragment : Fragment() {
 
     private fun newOrSaved() {
         val alertDialog = AlertDialog.Builder(context)
-        alertDialog.setPositiveButton(getString(R.string.new_ok), { _, _ ->
+        alertDialog.setPositiveButton(getString(R.string.new_ok)) { _, _ ->
             Toast.makeText(context, getString(R.string.last_game_lost), Toast.LENGTH_SHORT).show()
             editor.putString(GAME_STATE_TAG, AppConstants.Companion.GameState.NEW.name)
             editor.apply()
             GAME_STATE = AppConstants.Companion.GameState.NEW.name
             AppConstants.MODE = NEW_MODE
-            enableButton(tileCreatorButton)
-            enableButton(worldCreatorButton)
-        })
+        }
         alertDialog.setNegativeButton(getString(R.string.cancel), null)
         alertDialog.setMessage(getString(R.string.override_question))
         alertDialog.setTitle(getString(R.string.game))

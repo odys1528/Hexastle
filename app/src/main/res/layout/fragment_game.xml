@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mainLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
@@ -9,6 +10,7 @@
     android:padding="10dp">
 
     <LinearLayout
+        android:id="@+id/variantsLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:baselineAligned="false"
@@ -16,88 +18,108 @@
         android:weightSum="2">
 
         <LinearLayout
+            android:id="@+id/tileBorderLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:orientation="vertical"
-            android:padding="5dp">
+            android:orientation="horizontal">
 
-            <ImageView
-                android:id="@+id/tileCreatorImageView"
+            <LinearLayout
+                android:id="@+id/tileCreatorLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/desc"
-                app:srcCompat="@drawable/new_tile" />
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:padding="5dp">
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="5dp" />
+                <ImageView
+                    android:id="@+id/tileCreatorImageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/desc"
+                    app:srcCompat="@drawable/new_tile" />
 
-            <Button
-                android:id="@+id/tileCreatorButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorPrimaryDark"
-                android:text="@string/tile_creator_title"
-                android:textSize="35sp"
-                android:theme="@style/hexastle_text" />
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp" />
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="5dp" />
+                <TextView
+                    android:id="@+id/tileCreatorButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/tile_creator_title"
+                    android:textSize="35sp"
+                    android:theme="@style/hexastle_text" />
 
-            <TextView
-                android:id="@+id/tileCreatorTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="fill_vertical|center_horizontal"
-                android:text="@string/tile_creator_desc"
-                android:textSize="25sp"
-                android:theme="@style/hexastle_text" />
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp" />
+
+                <TextView
+                    android:id="@+id/tileCreatorTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="fill_vertical|center_horizontal"
+                    android:text="@string/tile_creator_desc"
+                    android:textSize="25sp"
+                    android:theme="@style/hexastle_text" />
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/worldBorderLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:orientation="vertical"
-            android:padding="5dp">
+            android:orientation="horizontal">
 
-            <ImageView
-                android:id="@+id/worldCreatorImageView"
+            <LinearLayout
+                android:id="@+id/worldCreatorLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/desc"
-                app:srcCompat="@drawable/new_world" />
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:padding="5dp">
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="5dp" />
+                <ImageView
+                    android:id="@+id/worldCreatorImageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/desc"
+                    app:srcCompat="@drawable/new_world" />
 
-            <Button
-                android:id="@+id/worldCreatorButton"
-                style="@style/hexastle_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorPrimaryDark"
-                android:text="@string/world_creator_title"
-                android:textSize="35sp" />
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp" />
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="5dp" />
+                <TextView
+                    android:id="@+id/worldCreatorButton"
+                    style="@style/hexastle_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/world_creator_title"
+                    android:textSize="35sp" />
 
-            <TextView
-                android:id="@+id/worldCreatorTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:text="@string/world_creator_desc"
-                android:textSize="25sp"
-                android:theme="@style/hexastle_text" />
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp" />
 
+                <TextView
+                    android:id="@+id/worldCreatorTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="@string/world_creator_desc"
+                    android:textSize="25sp"
+                    android:theme="@style/hexastle_text" />
+
+            </LinearLayout>
         </LinearLayout>
 
     </LinearLayout>
@@ -107,11 +129,11 @@
         android:layout_height="20dp" />
 
     <Button
-        android:id="@+id/newGameButton"
+        android:id="@+id/startButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimaryDark"
-        android:text="@string/new_game"
+        android:text="@string/start_game"
         android:textSize="40sp"
         android:theme="@style/hexastle_text" />
 
@@ -120,12 +142,11 @@
         android:layout_height="10dp" />
 
     <Button
-        android:id="@+id/loadGameButton"
+        android:id="@+id/resetGameButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimaryDark"
-        android:text="@string/load_game"
-        android:textColor="@color/colorPrimary"
+        android:text="@string/reset"
         android:textSize="40sp"
         android:theme="@style/hexastle_text" />
 
