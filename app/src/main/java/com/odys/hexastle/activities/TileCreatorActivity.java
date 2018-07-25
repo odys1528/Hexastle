@@ -2,17 +2,31 @@ package com.odys.hexastle.activities;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ExpandableListAdapter;
+import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.odys.hexastle.R;
+import com.odys.hexastle.adapters.TileListAdapter;
+import com.odys.hexastle.models.Tile;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class TileCreatorActivity extends AppCompatActivity {
+
+    private ExpandableListView tileListView;
+    private List<String> categories;
+    private HashMap<String, List<Tile>> tileCategoryMap;
 
     private ImageView img;
     private ViewGroup rootLayout;
@@ -23,13 +37,64 @@ public class TileCreatorActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tile_creator);
+        setContentView(R.layout.navigation_tiles);
+
+        tileListView = findViewById(R.id.tileList);
+        initData();
+        ExpandableListAdapter tileListAdapter = new TileListAdapter(this, categories, tileCategoryMap);
+        tileListView.setAdapter(tileListAdapter);
+        tileListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+            int previousGroup = -1;
+
+            @Override
+            public void onGroupExpand(int i) {
+                if(i != previousGroup) {
+                    tileListView.collapseGroup(previousGroup);
+                    previousGroup = i;
+                }
+            }
+        });
+
         rootLayout = findViewById(R.id.viewGroup);
         img =  rootLayout.findViewById(R.id.testImageView);
 
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(150, 150);
         img.setLayoutParams(layoutParams);
         img.setOnTouchListener(new ChoiceTouchListener());
+    }
+
+    private void initData() {
+        categories = new ArrayList<>();
+        tileCategoryMap = new HashMap<>();
+
+        categories.add("dachy");
+        categories.add("drzewa");
+
+        List<Tile> dachy = new ArrayList<>();
+        Tile tile = new Tile(R.drawable.ic_info);
+        dachy.add(tile);
+        dachy.add(tile);
+        dachy.add(tile);
+
+        List<Tile> drzewa = new ArrayList<>();
+        tile = new Tile(R.drawable.ic_music);
+        drzewa.add(tile);
+        drzewa.add(tile);
+        drzewa.add(tile);
+        drzewa.add(tile);
+
+        tileCategoryMap.put(categories.get(0), dachy);
+        tileCategoryMap.put(categories.get(1), drzewa);
+    }
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = findViewById(R.id.tileNavigationLayout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 
     private final class ChoiceTouchListener implements View.OnTouchListener {
