@@ -2,8 +2,10 @@ package com.odys.hexastle.activities
 
 import android.animation.AnimatorInflater
 import android.animation.AnimatorSet
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
@@ -20,7 +22,11 @@ import com.odys.hexastle.utils.AppConstants
 import com.odys.hexastle.utils.AppConstants.Companion.GAME_STATE
 import com.odys.hexastle.utils.AppConstants.Companion.GAME_STATE_TAG
 import com.odys.hexastle.utils.AppConstants.Companion.MUSIC_TURNED_ON
+import com.odys.hexastle.utils.AppConstants.Companion.SOUND_SETTINGS_TAG
+import com.odys.hexastle.utils.AppConstants.Companion.SOUND_TURNED_ON
+import com.odys.hexastle.utils.AppConstants.Companion.clickSound
 import com.odys.hexastle.utils.AppConstants.Companion.editor
+import com.odys.hexastle.utils.AppConstants.Companion.playClickSound
 import com.odys.hexastle.utils.AppConstants.Companion.settings
 import kotlinx.android.synthetic.main.activity_start.*
 
@@ -28,6 +34,7 @@ class NavigationActivity : AppCompatActivity() {
 
     private var activeFragment = ""
 
+    @SuppressLint("CommitPrefEdits")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start)
@@ -44,10 +51,15 @@ class NavigationActivity : AppCompatActivity() {
         MUSIC_TURNED_ON = settings.getBoolean(AppConstants.MUSIC_SETTINGS_TAG, true)
         if(!MUSIC_TURNED_ON) MusicService.mute()
 
+        SOUND_TURNED_ON = settings.getBoolean(SOUND_SETTINGS_TAG, true)
+
+        clickSound = MediaPlayer.create(this, R.raw.click)//TODO
+
         GAME_STATE = settings.getString(GAME_STATE_TAG, AppConstants.Companion.GameState.NEW.name)
     }
 
     override fun onBackPressed() {
+        playClickSound()//TODO
         when (activeFragment) {
             "MainFragment" -> exit()
             else -> backToMain()
@@ -107,26 +119,28 @@ class NavigationActivity : AppCompatActivity() {
         val barAnimatorSet = AnimatorInflater.loadAnimator(this, R.animator.appear)
                 as AnimatorSet
         barAnimatorSet.setTarget(navbarLayout)
-        barAnimatorSet.duration = 2000L
+        barAnimatorSet.duration = 1000L
         barAnimatorSet.start()
     }
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener {
         item -> when (item.itemId) {
-            R.id.navigation_start -> {
-                val gameFragment = GameFragment.newInstance()
-                openFragment(gameFragment)
-                activeFragment = "GameFragment"
-                return@OnNavigationItemSelectedListener true
-            }
-
-            R.id.navigation_info -> {
-                val infoFragment = InfoFragment.newInstance()
-                openFragment(infoFragment)
-                activeFragment = "InfoFragment"
-                return@OnNavigationItemSelectedListener true
-            }
+        R.id.navigation_start -> {
+            playClickSound()//TODO
+            val gameFragment = GameFragment.newInstance()
+            openFragment(gameFragment)
+            activeFragment = "GameFragment"
+            return@OnNavigationItemSelectedListener true
         }
+
+        R.id.navigation_info -> {
+            playClickSound()//TODO
+            val infoFragment = InfoFragment.newInstance()
+            openFragment(infoFragment)
+            activeFragment = "InfoFragment"
+            return@OnNavigationItemSelectedListener true
+        }
+    }
         false
     }
 

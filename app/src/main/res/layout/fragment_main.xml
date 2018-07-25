@@ -16,13 +16,31 @@
         android:orientation="vertical"
         android:paddingTop="5dp">
 
-        <ImageView
-            android:id="@+id/soundImageView"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_gravity="right"
-            android:paddingRight="20dp"
-            app:srcCompat="@drawable/ic_sound" />
+        <LinearLayout
+            android:id="@+id/settingLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/soundImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:paddingEnd="10dp"
+                android:paddingStart="10dp"
+                app:srcCompat="@drawable/ic_sound_on"
+                android:contentDescription="@string/desc" />
+
+            <ImageView
+                android:id="@+id/musicImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                app:srcCompat="@drawable/ic_music"
+                android:contentDescription="@string/desc" />
+        </LinearLayout>
 
         <Space
             android:layout_width="match_parent"

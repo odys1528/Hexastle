@@ -12,7 +12,10 @@ import com.odys.hexastle.R
 import com.odys.hexastle.services.MusicService
 import com.odys.hexastle.utils.AppConstants
 import com.odys.hexastle.utils.AppConstants.Companion.MUSIC_TURNED_ON
+import com.odys.hexastle.utils.AppConstants.Companion.SOUND_SETTINGS_TAG
+import com.odys.hexastle.utils.AppConstants.Companion.SOUND_TURNED_ON
 import com.odys.hexastle.utils.AppConstants.Companion.editor
+import com.odys.hexastle.utils.AppConstants.Companion.playClickSound
 import kotlinx.android.synthetic.main.fragment_main.*
 
 
@@ -28,20 +31,37 @@ class MainFragment : Fragment() {
 
         if(!MUSIC_TURNED_ON) {  // init color
             val color = ResourcesCompat.getColor(resources, R.color.colorPrimaryDark, null)
-            soundImageView.setColorFilter(color)
+            musicImageView.setColorFilter(color)
         }
 
-        soundImageView.setOnClickListener {
+        if(!SOUND_TURNED_ON) {
+            soundImageView.setImageResource(R.drawable.ic_sound_off)
+        }
+
+        musicImageView.setOnClickListener {
+            playClickSound()
             if(MUSIC_TURNED_ON)  {
                 val color = ResourcesCompat.getColor(resources, R.color.colorPrimaryDark, null)
-                soundImageView.setColorFilter(color)
+                musicImageView.setColorFilter(color)
                 MusicService.mute()
             } else {
-                soundImageView.clearColorFilter()
+                musicImageView.clearColorFilter()
                 MusicService.amplify()
             }
             MUSIC_TURNED_ON = !MUSIC_TURNED_ON
             editor.putBoolean(AppConstants.MUSIC_SETTINGS_TAG, MUSIC_TURNED_ON)
+            editor.apply()
+        }
+
+        soundImageView.setOnClickListener {
+            if(SOUND_TURNED_ON) {
+                soundImageView.setImageResource(R.drawable.ic_sound_off)
+            } else {
+                soundImageView.setImageResource(R.drawable.ic_sound_on)
+            }
+            SOUND_TURNED_ON = !SOUND_TURNED_ON
+            playClickSound()
+            editor.putBoolean(SOUND_SETTINGS_TAG, SOUND_TURNED_ON)
             editor.apply()
         }
     }
@@ -49,7 +69,7 @@ class MainFragment : Fragment() {
     private fun soundImageAnimation() {
         val soundImageAnimatorSet = AnimatorInflater.loadAnimator(context, R.animator.appear)
                 as AnimatorSet
-        soundImageAnimatorSet.setTarget(soundImageView)
+        soundImageAnimatorSet.setTarget(musicImageView)
         soundImageAnimatorSet.duration = 1000L
         soundImageAnimatorSet.start()
     }

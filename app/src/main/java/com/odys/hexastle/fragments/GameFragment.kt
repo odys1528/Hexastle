@@ -6,6 +6,8 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
+import android.support.v4.content.res.ResourcesCompat
 import android.support.v7.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
@@ -22,6 +24,7 @@ import com.odys.hexastle.utils.AppConstants.Companion.GAME_STATE
 import com.odys.hexastle.utils.AppConstants.Companion.GAME_STATE_TAG
 import com.odys.hexastle.utils.AppConstants.Companion.NEW_MODE
 import com.odys.hexastle.utils.AppConstants.Companion.editor
+import com.odys.hexastle.utils.AppConstants.Companion.playClickSound
 import kotlinx.android.synthetic.main.fragment_game.*
 
 class GameFragment : Fragment() {
@@ -30,6 +33,7 @@ class GameFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         startButton.setOnClickListener {
+            playClickSound()//TODO
             if(tileCreatorLayout.alpha == 1f) {
                 val intent = Intent(context, TileCreatorActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
@@ -45,8 +49,9 @@ class GameFragment : Fragment() {
         disableButton(resetGameButton)
 
         tileCreatorLayout.setOnClickListener {
+            playClickSound()//TODO
             tileCreatorLayout.alpha = 1f
-            tileBorderLayout.background = resources.getDrawable(R.drawable.border)
+            tileBorderLayout.background = ResourcesCompat.getDrawable(resources, R.drawable.border, null)
             worldBorderLayout.setBackgroundResource(0)
             worldCreatorLayout.alpha = 0.5f
             enableButton(startButton)
@@ -54,8 +59,9 @@ class GameFragment : Fragment() {
         }
 
         worldCreatorLayout.setOnClickListener {
+            playClickSound()//TODO
             worldCreatorLayout.alpha = 1f
-            worldBorderLayout.background = resources.getDrawable(R.drawable.border)
+            worldBorderLayout.background = ResourcesCompat.getDrawable(resources, R.drawable.border, null)
             tileBorderLayout.setBackgroundResource(0)
             tileCreatorLayout.alpha = 0.5f
             enableButton(startButton)
@@ -63,6 +69,7 @@ class GameFragment : Fragment() {
         }
 
         mainLayout.setOnClickListener {
+            playClickSound()//TODO
             worldCreatorLayout.alpha = 1f
             tileCreatorLayout.alpha = 1f
             disableButton(startButton)
@@ -123,7 +130,7 @@ class GameFragment : Fragment() {
 
     private fun disableButton(button: Button) {
         button.isEnabled = false
-        button.setTextColor(resources.getColor(R.color.colorPrimary))
+        button.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary))
     }
 
     private fun newOrSaved() {
