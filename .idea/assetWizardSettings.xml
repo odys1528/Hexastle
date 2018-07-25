@@ -18,12 +18,22 @@
                                 <PersistentState>
                                   <option name="children">
                                     <map>
+                                      <entry key="backgroundImage">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="scalingPercent" value="29" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
                                       <entry key="foregroundImage">
                                         <value>
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="scalingPercent" value="90" />
                                                 <entry key="trimmed" value="true" />
                                               </map>
                                             </option>
@@ -34,11 +44,9 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="backgroundAssetType" value="COLOR" />
-                                      <entry key="backgroundColor" value="5e81a2" />
-                                      <entry key="foregroundImage" value="C:\Users\jolka\Desktop\hexastle\splash.png" />
-                                      <entry key="legacyIconShape" value="CIRCLE" />
-                                      <entry key="webIconShape" value="CIRCLE" />
+                                      <entry key="foregroundImage" value="C:\Users\jolka\AndroidStudioProjects\Hexastle\app\src\main\res\drawable\splash.png" />
+                                      <entry key="legacyIconShape" value="NONE" />
+                                      <entry key="webIconShape" value="NONE" />
                                     </map>
                                   </option>
                                 </PersistentState>
