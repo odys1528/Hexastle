@@ -1,5 +1,8 @@
 package com.odys.hexastle.activities;
 
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -60,8 +63,31 @@ public class TileCreatorActivity extends AppCompatActivity {
 
         drawer = findViewById(R.id.tileNavigationLayout);
         FloatingActionButton addButton = findViewById(R.id.addButton);
+        ObjectAnimator valueAnimator = ObjectAnimator.ofFloat(addButton, "alpha", 1.0f, 0.2f);
+        valueAnimator.setDuration(100);
+        valueAnimator.setRepeatCount(1);
+        valueAnimator.setRepeatMode(ValueAnimator.REVERSE);
         addButton.setOnClickListener(view -> {
-            drawer.openDrawer(GravityCompat.START);
+            valueAnimator.start();
+        });
+
+        valueAnimator.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animator) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animator) {
+                drawer.openDrawer(GravityCompat.START);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animator) {
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animator) {
+            }
         });
 
         rootLayout = findViewById(R.id.viewGroup);
