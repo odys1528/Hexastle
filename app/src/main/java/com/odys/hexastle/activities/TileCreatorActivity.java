@@ -2,6 +2,7 @@ package com.odys.hexastle.activities;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -28,6 +29,8 @@ public class TileCreatorActivity extends AppCompatActivity {
     private List<String> categories;
     private HashMap<String, List<Tile>> tileCategoryMap;
 
+    private DrawerLayout drawer;
+
     private ImageView img;
     private ViewGroup rootLayout;
     private int _xDelta;
@@ -53,6 +56,12 @@ public class TileCreatorActivity extends AppCompatActivity {
                     previousGroup = i;
                 }
             }
+        });
+
+        drawer = findViewById(R.id.tileNavigationLayout);
+        FloatingActionButton addButton = findViewById(R.id.addButton);
+        addButton.setOnClickListener(view -> {
+            drawer.openDrawer(GravityCompat.START);
         });
 
         rootLayout = findViewById(R.id.viewGroup);
@@ -89,7 +98,6 @@ public class TileCreatorActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = findViewById(R.id.tileNavigationLayout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
