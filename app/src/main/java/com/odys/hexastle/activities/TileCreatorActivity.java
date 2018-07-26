@@ -4,6 +4,8 @@ import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
+import android.content.res.AssetManager;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.GravityCompat;
@@ -22,6 +24,7 @@ import com.odys.hexastle.R;
 import com.odys.hexastle.adapters.TileListAdapter;
 import com.odys.hexastle.models.Tile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -101,25 +104,35 @@ public class TileCreatorActivity extends AppCompatActivity {
     private void initData() {
         categories = new ArrayList<>();
         tileCategoryMap = new HashMap<>();
+        AssetManager am = this.getAssets();
+        String[] files;
 
-        categories.add("dachy");
-        categories.add("drzewa");
+        for(String s : getResources().getStringArray(R.array.categories)) {
+            categories.add(s);
+//            try {
+                List<Tile> category = new ArrayList<>();
+//                files = am.list(s);
+//                ArrayList<Drawable> drawables = new ArrayList<>();
+//
+//                for (String file : files) {
+//                    int resID = getResources().getIdentifier(file , "drawable", getPackageName());
+//                    category.add(new Tile(resID));
+//                }
 
-        List<Tile> dachy = new ArrayList<>();
-        Tile tile = new Tile(R.drawable.ic_info);
-        dachy.add(tile);
-        dachy.add(tile);
-        dachy.add(tile);
+                tileCategoryMap.put(s, category);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+        }
 
-        List<Tile> drzewa = new ArrayList<>();
-        tile = new Tile(R.drawable.ic_music);
-        drzewa.add(tile);
-        drzewa.add(tile);
-        drzewa.add(tile);
-        drzewa.add(tile);
 
-        tileCategoryMap.put(categories.get(0), dachy);
-        tileCategoryMap.put(categories.get(1), drzewa);
+//        List<Tile> dachy = new ArrayList<>();
+//        Tile tile = new Tile(R.drawable.ic_info);
+//        dachy.add(tile);
+//        dachy.add(tile);
+//        dachy.add(tile);
+//
+//        tileCategoryMap.put(categories.get(0), dachy);
     }
 
     @Override

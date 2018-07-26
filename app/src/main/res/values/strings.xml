@@ -37,4 +37,15 @@
         <item>It is possible also to make custom pieces.</item>
         <item>Game state can be saved.</item>
     </string-array>
+
+    <string-array name="categories">
+        <item>basic</item>
+        <item>ground</item>
+        <item>trees</item>
+        <item>nature extra</item>
+        <item>buildings</item>
+        <item>roofs</item>
+        <item>building extra</item>
+        <item>custom</item>
+    </string-array>
 </resources>
