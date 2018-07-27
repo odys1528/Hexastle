@@ -1,19 +1,14 @@
 package com.odys.hexastle.activities;
 
-import android.animation.Animator;
 import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.content.res.AssetManager;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MotionEvent;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
@@ -23,8 +18,8 @@ import android.widget.RelativeLayout;
 import com.odys.hexastle.R;
 import com.odys.hexastle.adapters.TileListAdapter;
 import com.odys.hexastle.models.Tile;
+import com.odys.hexastle.utils.DragDropHandler;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -39,8 +34,6 @@ public class TileCreatorActivity extends AppCompatActivity {
 
     private ImageView img;
     private ViewGroup rootLayout;
-    private int _xDelta;
-    private int _yDelta;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -66,7 +59,7 @@ public class TileCreatorActivity extends AppCompatActivity {
 
         drawer = findViewById(R.id.tileNavigationLayout);
         FloatingActionButton addButton = findViewById(R.id.addButton);
-        
+
         ObjectAnimator pushValueAnimator = ObjectAnimator.ofFloat(addButton, "alpha", 1.0f, 0.2f);
         pushValueAnimator.setDuration(100);
         pushValueAnimator.setRepeatCount(0);
@@ -94,7 +87,7 @@ public class TileCreatorActivity extends AppCompatActivity {
 
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(150, 150);
         img.setLayoutParams(layoutParams);
-        img.setOnTouchListener(new ChoiceTouchListener());
+        DragDropHandler dragDropHandler = new DragDropHandler(rootLayout, img);
     }
 
     private void initData() {
@@ -140,42 +133,4 @@ public class TileCreatorActivity extends AppCompatActivity {
         }
     }
 
-    private final class ChoiceTouchListener implements View.OnTouchListener {
-        @SuppressLint("ClickableViewAccessibility")
-        public boolean onTouch(View view, MotionEvent event) {
-            final int X = (int) event.getRawX();
-            final int Y = (int) event.getRawY();
-            switch (event.getAction() & MotionEvent.ACTION_MASK) {
-                case MotionEvent.ACTION_DOWN:
-                    Log.d("ACTION_DOWN", "nana");
-                    RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
-                    _xDelta = X - lParams.leftMargin;
-                    _yDelta = Y - lParams.topMargin;
-                    img.setAlpha(0.5f);
-                    break;
-                case MotionEvent.ACTION_UP:
-                    Log.d("ACTION_UP", "nana");
-                    img.setAlpha(1.0f);
-                    break;
-                case MotionEvent.ACTION_POINTER_DOWN:
-                    Log.d("ACTION_POINTER_DOWN", "nana");
-                    break;
-                case MotionEvent.ACTION_POINTER_UP:
-                    Log.d("ACTION_POINTER_UP", "nana");
-                    break;
-                case MotionEvent.ACTION_MOVE:
-                    Log.d("ACTION_MOVE", "nana");
-                    RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) view
-                            .getLayoutParams();
-                    layoutParams.leftMargin = X - _xDelta;
-                    layoutParams.topMargin = Y - _yDelta;
-                    layoutParams.rightMargin = -250;
-                    layoutParams.bottomMargin = -250;
-                    view.setLayoutParams(layoutParams);
-                    break;
-            }
-            rootLayout.invalidate();
-            return true;
-        }
-    }
 }
