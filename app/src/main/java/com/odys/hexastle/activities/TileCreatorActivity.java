@@ -18,6 +18,7 @@ import android.widget.RelativeLayout;
 import com.odys.hexastle.R;
 import com.odys.hexastle.adapters.TileListAdapter;
 import com.odys.hexastle.models.Tile;
+import com.odys.hexastle.utils.AppConstants;
 import com.odys.hexastle.utils.DragDropHandler;
 
 import java.util.ArrayList;
@@ -32,9 +33,6 @@ public class TileCreatorActivity extends AppCompatActivity {
 
     private DrawerLayout drawer;
 
-    private ImageView img;
-    private ViewGroup rootLayout;
-
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +40,8 @@ public class TileCreatorActivity extends AppCompatActivity {
         setContentView(R.layout.navigation_tiles);
 
         tileListView = findViewById(R.id.tileList);
-        initData();
-        ExpandableListAdapter tileListAdapter = new TileListAdapter(this, categories, tileCategoryMap);
+        ExpandableListAdapter tileListAdapter = new TileListAdapter(this,
+                AppConstants.Companion.getCategories(), AppConstants.Companion.getTileMap());
         tileListView.setAdapter(tileListAdapter);
         tileListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
             int previousGroup = -1;
@@ -82,46 +80,10 @@ public class TileCreatorActivity extends AppCompatActivity {
             return false;
         });
 
-        rootLayout = findViewById(R.id.viewGroup);
-        img =  rootLayout.findViewById(R.id.testImageView);
+        ViewGroup rootLayout = findViewById(R.id.viewGroup);
+        ImageView img = rootLayout.findViewById(R.id.testImageView);
 
-        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(150, 150);
-        img.setLayoutParams(layoutParams);
         DragDropHandler dragDropHandler = new DragDropHandler(rootLayout, img);
-    }
-
-    private void initData() {
-        categories = new ArrayList<>();
-        tileCategoryMap = new HashMap<>();
-        AssetManager am = this.getAssets();
-        String[] files;
-
-        for(String s : getResources().getStringArray(R.array.categories)) {
-            categories.add(s);
-//            try {
-                List<Tile> category = new ArrayList<>();
-//                files = am.list(s);
-//                ArrayList<Drawable> drawables = new ArrayList<>();
-//
-//                for (String file : files) {
-//                    int resID = getResources().getIdentifier(file , "drawable", getPackageName());
-//                    category.add(new Tile(resID));
-//                }
-
-                tileCategoryMap.put(s, category);
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-        }
-
-
-//        List<Tile> dachy = new ArrayList<>();
-//        Tile tile = new Tile(R.drawable.ic_info);
-//        dachy.add(tile);
-//        dachy.add(tile);
-//        dachy.add(tile);
-//
-//        tileCategoryMap.put(categories.get(0), dachy);
     }
 
     @Override

@@ -2,6 +2,9 @@ package com.odys.hexastle.adapters;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,6 +76,10 @@ public class TileListAdapter extends BaseExpandableListAdapter{
         categoryTextView.setTypeface(null, Typeface.BOLD);
         categoryTextView.setText(categoryName);
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            categoryTextView.setTextAppearance(R.style.hexastle_text);
+        }
+
         TextView counter = view.findViewById(R.id.counterTextView);
         counter.setText(getChildrenCount(i)+"");
 
@@ -81,14 +88,14 @@ public class TileListAdapter extends BaseExpandableListAdapter{
 
     @Override
     public View getChildView(int i, int i1, boolean b, View view, ViewGroup viewGroup) {
-        final int childImage = tileCategoryMap.get(categories.get(i)).get(i1).getImageResource();
+        final Drawable childImage = tileCategoryMap.get(categories.get(i)).get(i1).getImageResource();
         if(view == null) {
             LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.list_subcategory, null);
         }
 
         ImageView tileImageView = view.findViewById(R.id.tileImageView);
-        tileImageView.setImageResource(childImage);
+        tileImageView.setImageDrawable(childImage);
 
         return view;
     }

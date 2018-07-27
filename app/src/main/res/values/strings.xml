@@ -30,6 +30,7 @@
     <string name="last_game_load">Loaded last game.</string>
     <string name="reset">Reset game</string>
     <string name="navigation_title">Tile Picker</string>
+    <string name="loading_text">Loading tiles...</string>
 
     <string-array name="about_description">
         <item>Here will be description of game rules.</item>

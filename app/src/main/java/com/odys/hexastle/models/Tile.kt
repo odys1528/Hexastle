@@ -1,3 +1,5 @@
 package com.odys.hexastle.models
 
-class Tile(var imageResource : Int)
+import android.graphics.drawable.Drawable
+
+class Tile(var imageResource : Drawable)

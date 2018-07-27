@@ -53,13 +53,13 @@ class NavigationActivity : AppCompatActivity() {
 
         SOUND_TURNED_ON = settings.getBoolean(SOUND_SETTINGS_TAG, true)
 
-        clickSound = MediaPlayer.create(this, R.raw.click)//TODO
+        clickSound = MediaPlayer.create(this, R.raw.click)
 
         GAME_STATE = settings.getString(GAME_STATE_TAG, AppConstants.Companion.GameState.NEW.name)
     }
 
     override fun onBackPressed() {
-        playClickSound()//TODO
+        playClickSound()
         when (activeFragment) {
             "MainFragment" -> exit()
             else -> backToMain()
@@ -126,7 +126,7 @@ class NavigationActivity : AppCompatActivity() {
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener {
         item -> when (item.itemId) {
         R.id.navigation_start -> {
-            playClickSound()//TODO
+            playClickSound()
             val gameFragment = GameFragment.newInstance()
             openFragment(gameFragment)
             activeFragment = "GameFragment"
@@ -134,7 +134,7 @@ class NavigationActivity : AppCompatActivity() {
         }
 
         R.id.navigation_info -> {
-            playClickSound()//TODO
+            playClickSound()
             val infoFragment = InfoFragment.newInstance()
             openFragment(infoFragment)
             activeFragment = "InfoFragment"

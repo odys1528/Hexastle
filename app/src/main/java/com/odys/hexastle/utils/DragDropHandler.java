@@ -20,6 +20,8 @@ public class DragDropHandler {
         this.rootLayout = rootLayout;
         this.img = img;
 
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(150, 150);
+        this.img.setLayoutParams(layoutParams);
         this.img.setOnTouchListener(new DragDropListener());
     }
 

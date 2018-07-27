@@ -25,6 +25,7 @@ import com.odys.hexastle.utils.AppConstants.Companion.GAME_STATE_TAG
 import com.odys.hexastle.utils.AppConstants.Companion.NEW_MODE
 import com.odys.hexastle.utils.AppConstants.Companion.editor
 import com.odys.hexastle.utils.AppConstants.Companion.playClickSound
+import com.odys.hexastle.utils.TileDataLoader
 import kotlinx.android.synthetic.main.fragment_game.*
 
 class GameFragment : Fragment() {
@@ -33,11 +34,13 @@ class GameFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         startButton.setOnClickListener {
-            playClickSound()//TODO
+            playClickSound()
             if(tileCreatorLayout.alpha == 1f) {
                 val intent = Intent(context, TileCreatorActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
-                navbarAnimation(intent)
+//                navbarAnimation(intent)
+                val dataLoader = TileDataLoader(context, intent)
+                dataLoader.init()
             } else if(worldCreatorButton.alpha == 1f) {
                 val intent = Intent(context, WorldCreatorActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
@@ -49,7 +52,7 @@ class GameFragment : Fragment() {
         disableButton(resetGameButton)
 
         tileCreatorLayout.setOnClickListener {
-            playClickSound()//TODO
+            playClickSound()
             tileCreatorLayout.alpha = 1f
             tileBorderLayout.background = ResourcesCompat.getDrawable(resources, R.drawable.border, null)
             worldBorderLayout.setBackgroundResource(0)
@@ -59,7 +62,7 @@ class GameFragment : Fragment() {
         }
 
         worldCreatorLayout.setOnClickListener {
-            playClickSound()//TODO
+            playClickSound()
             worldCreatorLayout.alpha = 1f
             worldBorderLayout.background = ResourcesCompat.getDrawable(resources, R.drawable.border, null)
             tileBorderLayout.setBackgroundResource(0)
@@ -69,7 +72,7 @@ class GameFragment : Fragment() {
         }
 
         mainLayout.setOnClickListener {
-            playClickSound()//TODO
+            playClickSound()
             worldCreatorLayout.alpha = 1f
             tileCreatorLayout.alpha = 1f
             disableButton(startButton)
