@@ -66,31 +66,27 @@ public class TileCreatorActivity extends AppCompatActivity {
 
         drawer = findViewById(R.id.tileNavigationLayout);
         FloatingActionButton addButton = findViewById(R.id.addButton);
-        ObjectAnimator valueAnimator = ObjectAnimator.ofFloat(addButton, "alpha", 1.0f, 0.2f);
-        valueAnimator.setDuration(100);
-        valueAnimator.setRepeatCount(1);
-        valueAnimator.setRepeatMode(ValueAnimator.REVERSE);
-        addButton.setOnClickListener(view -> {
-            valueAnimator.start();
-        });
+        
+        ObjectAnimator pushValueAnimator = ObjectAnimator.ofFloat(addButton, "alpha", 1.0f, 0.2f);
+        pushValueAnimator.setDuration(100);
+        pushValueAnimator.setRepeatCount(0);
 
-        valueAnimator.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animator) {
-            }
+        ObjectAnimator releaseValueAnimator = ObjectAnimator.ofFloat(addButton, "alpha", 0.2f, 1.0f);
+        releaseValueAnimator.setDuration(100);
+        releaseValueAnimator.setRepeatCount(0);
 
-            @Override
-            public void onAnimationEnd(Animator animator) {
-                drawer.openDrawer(GravityCompat.START);
-            }
 
-            @Override
-            public void onAnimationCancel(Animator animator) {
+        addButton.setOnTouchListener((view, motionEvent) -> {
+            switch(motionEvent.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    pushValueAnimator.start();
+                    return true;
+                case MotionEvent.ACTION_UP:
+                    releaseValueAnimator.start();
+                    drawer.openDrawer(GravityCompat.START);
+                    return true;
             }
-
-            @Override
-            public void onAnimationRepeat(Animator animator) {
-            }
+            return false;
         });
 
         rootLayout = findViewById(R.id.viewGroup);
