@@ -12,15 +12,24 @@ import android.view.ViewGroup;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.odys.hexastle.R;
 import com.odys.hexastle.adapters.TileListAdapter;
+import com.odys.hexastle.models.Tile;
 import com.odys.hexastle.utils.AppConstants;
 import com.odys.hexastle.utils.DragDropHandler;
+
+import java.util.HashMap;
+import java.util.List;
 
 public class TileCreatorActivity extends AppCompatActivity {
 
     private ExpandableListView tileListView;
+    private List<String> categories;
+    private HashMap<String, List<Tile>> tileCategoryMap;
+
     private DrawerLayout drawer;
 
     @SuppressLint("ClickableViewAccessibility")
@@ -28,6 +37,8 @@ public class TileCreatorActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.navigation_tiles);
+
+        ViewGroup rootLayout = findViewById(R.id.viewGroup);
 
         tileListView = findViewById(R.id.tileList);
         ExpandableListAdapter tileListAdapter = new TileListAdapter(this,
@@ -44,6 +55,16 @@ public class TileCreatorActivity extends AppCompatActivity {
                 }
             }
         });
+        tileListView.setOnChildClickListener((expandableListView, view, group, child, id) -> {
+            ImageView picked = view.findViewById(R.id.tileImageView);
+            ImageView newTile = new ImageView(this);
+            newTile.setImageDrawable(picked.getDrawable());
+            newTile.setLayoutParams(new RelativeLayout.LayoutParams(
+                    RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
+            rootLayout.addView(newTile);
+            new DragDropHandler(rootLayout, newTile);
+            return false;
+        });
 
         drawer = findViewById(R.id.tileNavigationLayout);
         FloatingActionButton addButton = findViewById(R.id.addButton);
@@ -55,6 +76,7 @@ public class TileCreatorActivity extends AppCompatActivity {
         ObjectAnimator releaseValueAnimator = ObjectAnimator.ofFloat(addButton, "alpha", 0.2f, 1.0f);
         releaseValueAnimator.setDuration(100);
         releaseValueAnimator.setRepeatCount(0);
+
 
         addButton.setOnTouchListener((view, motionEvent) -> {
             switch(motionEvent.getAction()) {
@@ -69,12 +91,6 @@ public class TileCreatorActivity extends AppCompatActivity {
             return false;
         });
 
-        ViewGroup rootLayout = findViewById(R.id.viewGroup);
-        ImageView img = rootLayout.findViewById(R.id.testImageView);
-        img.setX(getWindowManager().getDefaultDisplay().getWidth()/2-85); //hardcoded center
-        img.setY(130); //hardcoded center
-
-        DragDropHandler dragDropHandler = new DragDropHandler(rootLayout, img);
     }
 
     @Override
