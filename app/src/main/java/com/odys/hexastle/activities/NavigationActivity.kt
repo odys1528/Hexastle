@@ -45,6 +45,10 @@ class NavigationActivity : AppCompatActivity() {
 
         splashAnimation()
 
+        initSettings()
+    }
+
+    private fun initSettings() {
         settings = getSharedPreferences(AppConstants.GAME_SETTINGS_TAG, Context.MODE_PRIVATE)
         AppConstants.editor = settings.edit()
 
@@ -69,7 +73,7 @@ class NavigationActivity : AppCompatActivity() {
     private fun backToMain() {
         openFragment(MainFragment.newInstance())
         activeFragment = "MainFragment"
-        navigationView.menu.getItem(0).isEnabled= true
+        navigationView.menu.getItem(0).isEnabled = true
         navigationView.menu.getItem(0).isChecked = true
     }
 

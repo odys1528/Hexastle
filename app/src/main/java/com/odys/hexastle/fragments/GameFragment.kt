@@ -37,13 +37,9 @@ class GameFragment : Fragment() {
             playClickSound()
             if(tileCreatorLayout.alpha == 1f) {
                 val intent = Intent(context, TileCreatorActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
-//                navbarAnimation(intent)
-                val dataLoader = TileDataLoader(context, intent)
-                dataLoader.init()
+                navbarAnimation(intent)
             } else if(worldCreatorButton.alpha == 1f) {
                 val intent = Intent(context, WorldCreatorActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
                 navbarAnimation(intent)
             }
         }
@@ -103,11 +99,13 @@ class GameFragment : Fragment() {
 
         valueAnimator.addListener(object : Animator.AnimatorListener {
             override fun onAnimationRepeat(p0: Animator?) {
+                val dataLoader = TileDataLoader(context, intent)
+                dataLoader.init()
+
                 navbarLayout.visibility = View.INVISIBLE
                 variantsLayout.visibility = View.INVISIBLE
                 startButton.visibility = View.INVISIBLE
                 resetButton.visibility = View.INVISIBLE
-                startActivity(intent)
             }
 
             override fun onAnimationEnd(p0: Animator?) {

@@ -49,7 +49,6 @@ public class DragDropHandler {
                     Log.d("ACTION_POINTER_UP", "nana");
                     break;
                 case MotionEvent.ACTION_MOVE:
-                    Log.d("ACTION_MOVE", "nana");
                     RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) view
                             .getLayoutParams();
                     layoutParams.leftMargin = X - _xDelta;
@@ -57,6 +56,7 @@ public class DragDropHandler {
                     layoutParams.rightMargin = -250;
                     layoutParams.bottomMargin = -250;
                     view.setLayoutParams(layoutParams);
+                    Log.d("ACTION_MOVE", view.getX() + " : " + view.getY());
                     break;
             }
             rootLayout.invalidate();

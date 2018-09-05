@@ -2,7 +2,6 @@ package com.odys.hexastle.activities;
 
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
-import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.GravityCompat;
@@ -13,24 +12,15 @@ import android.view.ViewGroup;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 
 import com.odys.hexastle.R;
 import com.odys.hexastle.adapters.TileListAdapter;
-import com.odys.hexastle.models.Tile;
 import com.odys.hexastle.utils.AppConstants;
 import com.odys.hexastle.utils.DragDropHandler;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 public class TileCreatorActivity extends AppCompatActivity {
 
     private ExpandableListView tileListView;
-    private List<String> categories;
-    private HashMap<String, List<Tile>> tileCategoryMap;
-
     private DrawerLayout drawer;
 
     @SuppressLint("ClickableViewAccessibility")
@@ -66,7 +56,6 @@ public class TileCreatorActivity extends AppCompatActivity {
         releaseValueAnimator.setDuration(100);
         releaseValueAnimator.setRepeatCount(0);
 
-
         addButton.setOnTouchListener((view, motionEvent) -> {
             switch(motionEvent.getAction()) {
                 case MotionEvent.ACTION_DOWN:
@@ -82,6 +71,8 @@ public class TileCreatorActivity extends AppCompatActivity {
 
         ViewGroup rootLayout = findViewById(R.id.viewGroup);
         ImageView img = rootLayout.findViewById(R.id.testImageView);
+        img.setX(getWindowManager().getDefaultDisplay().getWidth()/2-85); //hardcoded center
+        img.setY(130); //hardcoded center
 
         DragDropHandler dragDropHandler = new DragDropHandler(rootLayout, img);
     }
