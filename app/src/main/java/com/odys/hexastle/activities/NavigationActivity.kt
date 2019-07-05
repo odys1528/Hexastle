@@ -1,14 +1,18 @@
 package com.odys.hexastle.activities
 
+import android.Manifest
 import android.animation.AnimatorInflater
 import android.animation.AnimatorSet
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
+import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.view.View
@@ -33,6 +37,7 @@ import kotlinx.android.synthetic.main.activity_start.*
 class NavigationActivity : AppCompatActivity() {
 
     private var activeFragment = ""
+    private val PERMISSION = 666
 
     @SuppressLint("CommitPrefEdits")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,6 +51,10 @@ class NavigationActivity : AppCompatActivity() {
         splashAnimation()
 
         initSettings()
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), PERMISSION)
+        }
     }
 
     private fun initSettings() {

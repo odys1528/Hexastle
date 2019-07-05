@@ -31,6 +31,10 @@
     <string name="reset">Reset game</string>
     <string name="navigation_title">Tile Picker</string>
     <string name="loading_text">Loading tiles...</string>
+    <string name="save">Save</string>
+    <string name="discard">Discard</string>
+    <string name="save_or_discard">What about your current work?</string>
+    <string name="no_permission">Missing permission. Current work cannot be saved.</string>
 
     <string-array name="about_description">
         <item>Here will be description of game rules.</item>

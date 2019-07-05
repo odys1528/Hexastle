@@ -1,18 +1,28 @@
 package com.odys.hexastle.activities;
 
+import android.Manifest;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.odys.hexastle.R;
 import com.odys.hexastle.adapters.TileListAdapter;
@@ -20,6 +30,9 @@ import com.odys.hexastle.models.Tile;
 import com.odys.hexastle.utils.AppConstants;
 import com.odys.hexastle.utils.DragDropHandler;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -27,9 +40,9 @@ import java.util.Random;
 public class TileCreatorActivity extends AppCompatActivity {
 
     private ExpandableListView tileListView;
+    private ViewGroup rootLayout;
     private List<String> categories;
     private HashMap<String, List<Tile>> tileCategoryMap;
-
     private DrawerLayout drawer;
 
     @SuppressLint("ClickableViewAccessibility")
@@ -38,7 +51,7 @@ public class TileCreatorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.navigation_tiles);
 
-        ViewGroup rootLayout = findViewById(R.id.viewGroup);
+        rootLayout = findViewById(R.id.viewGroup);
         ImageView dropZone = findViewById(R.id.dropZone);
         ImageView bin = findViewById(R.id.binImageView);
 
@@ -115,8 +128,54 @@ public class TileCreatorActivity extends AppCompatActivity {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            exitAlertDialog();
         }
+    }
+
+    private void exitAlertDialog() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setPositiveButton(R.string.save, (dialogInterface, i) -> {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                saveCreatedTile();
+            } else Toast.makeText(TileCreatorActivity.this, R.string.no_permission, Toast.LENGTH_SHORT).show();
+            super.onBackPressed();
+        });
+        alertDialog.setNeutralButton(R.string.discard, (dialogInterface, i) -> super.onBackPressed());
+        alertDialog.setMessage(R.string.save_or_discard);
+        alertDialog.setTitle(getString(R.string.app_name));
+        alertDialog.show();
+    }
+
+    private void saveCreatedTile() {
+        String mTempDir = Environment.getExternalStorageDirectory()+"/"+"TestTemp";
+        File mtempFile = new File(mTempDir);
+        if(!mtempFile.exists()) mtempFile.mkdir();
+
+        String mSaveImageName = "Test.png";
+        Bitmap mBackGround = Bitmap.createBitmap(300, 300, Bitmap.Config.ARGB_8888);
+
+        for (int i=0; i<rootLayout.getChildCount(); i++) {
+            ImageView image = (ImageView) rootLayout.getChildAt(i);
+            image.buildDrawingCache();
+            Bitmap mTopImage = image.getDrawingCache();
+            Canvas mCanvas = new Canvas(mBackGround);
+            mCanvas.drawBitmap(mTopImage, 0f, 0f, null);
+        }
+
+        try {
+            BitmapDrawable mBitmapDrawable = new BitmapDrawable(mBackGround);
+            Bitmap mNewSaving = mBitmapDrawable.getBitmap();
+            String ftoSave = mTempDir +"/"+ mSaveImageName;
+            File mFile = new File(ftoSave);
+            FileOutputStream mFileOutputStream = new FileOutputStream(mFile);
+            mNewSaving.compress(Bitmap.CompressFormat.PNG, 100 , mFileOutputStream);
+            mFileOutputStream.flush();
+            mFileOutputStream.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Log.i("TAG", "Image Created");
     }
 
 }
