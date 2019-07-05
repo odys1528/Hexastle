@@ -14,11 +14,15 @@ public class DragDropHandler {
 
     private int _xDelta;
     private int _yDelta;
+    private float delX;
+    private float delY;
 
     @SuppressLint("ClickableViewAccessibility")
-    public DragDropHandler(ViewGroup rootLayout, ImageView img) {
+    public DragDropHandler(ViewGroup rootLayout, ImageView img, float delX, float delY) {
         this.rootLayout = rootLayout;
         this.img = img;
+        this.delX = delX;
+        this.delY = delY;
 
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(150, 150);
         this.img.setLayoutParams(layoutParams);
@@ -39,8 +43,13 @@ public class DragDropHandler {
                     img.setAlpha(0.5f);
                     break;
                 case MotionEvent.ACTION_UP:
-                    Log.d("ACTION_UP", "nana");
+                    Log.d("ACTION_UP", view.getX() + " " + view.getY());
                     img.setAlpha(1.0f);
+
+                    if (isInBin(view.getX(), view.getY())) {
+                        Log.w("XXXXXXXXXXXXX", view.getX() + " " + delX + " / " + view.getY() + " " + delY);
+                    }
+
                     break;
                 case MotionEvent.ACTION_POINTER_DOWN:
                     Log.d("ACTION_POINTER_DOWN", "nana");
@@ -62,5 +71,9 @@ public class DragDropHandler {
             rootLayout.invalidate();
             return true;
         }
+    }
+
+    private boolean isInBin(float x, float y) {
+        return Math.abs(x-delX) < 50 && Math.abs(y-delY) < 150;
     }
 }

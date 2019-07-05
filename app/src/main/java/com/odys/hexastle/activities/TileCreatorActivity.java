@@ -40,6 +40,7 @@ public class TileCreatorActivity extends AppCompatActivity {
 
         ViewGroup rootLayout = findViewById(R.id.viewGroup);
         ImageView dropZone = findViewById(R.id.dropZone);
+        ImageView bin = findViewById(R.id.binImageView);
 
         tileListView = findViewById(R.id.tileList);
         ExpandableListAdapter tileListAdapter = new TileListAdapter(this,
@@ -78,7 +79,7 @@ public class TileCreatorActivity extends AppCompatActivity {
             }
             newTile.setX(x);
             newTile.setY(y);
-            new DragDropHandler(rootLayout, newTile);
+            new DragDropHandler(rootLayout, newTile, bin.getX(), bin.getY());
             return false;
         });
 
