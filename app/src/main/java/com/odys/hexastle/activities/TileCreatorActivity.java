@@ -13,7 +13,6 @@ import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.odys.hexastle.R;
 import com.odys.hexastle.adapters.TileListAdapter;
@@ -23,6 +22,7 @@ import com.odys.hexastle.utils.DragDropHandler;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 public class TileCreatorActivity extends AppCompatActivity {
 
@@ -39,6 +39,7 @@ public class TileCreatorActivity extends AppCompatActivity {
         setContentView(R.layout.navigation_tiles);
 
         ViewGroup rootLayout = findViewById(R.id.viewGroup);
+        ImageView dropZone = findViewById(R.id.dropZone);
 
         tileListView = findViewById(R.id.tileList);
         ExpandableListAdapter tileListAdapter = new TileListAdapter(this,
@@ -59,9 +60,24 @@ public class TileCreatorActivity extends AppCompatActivity {
             ImageView picked = view.findViewById(R.id.tileImageView);
             ImageView newTile = new ImageView(this);
             newTile.setImageDrawable(picked.getDrawable());
-            newTile.setLayoutParams(new RelativeLayout.LayoutParams(
-                    RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
+            newTile.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
             rootLayout.addView(newTile);
+
+            int[] screenLocation = new int[2];
+            dropZone.getLocationOnScreen(screenLocation);
+            int height = dropZone.getHeight();
+            int width = dropZone.getWidth();
+            Random r = new Random();
+            float x = -1;
+            float y = -1;
+            while (x<0) {
+                x = screenLocation[0] + r.nextFloat() * (width - 100 - screenLocation[0]);
+            }
+            while (y<0) {
+                y = screenLocation[1] + r.nextFloat() * (height - 150 - screenLocation[1]);
+            }
+            newTile.setX(x);
+            newTile.setY(y);
             new DragDropHandler(rootLayout, newTile);
             return false;
         });
