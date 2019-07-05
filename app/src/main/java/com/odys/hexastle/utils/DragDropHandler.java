@@ -47,7 +47,7 @@ public class DragDropHandler {
                     img.setAlpha(1.0f);
 
                     if (isInBin(view.getX(), view.getY())) {
-                        Log.w("XXXXXXXXXXXXX", view.getX() + " " + delX + " / " + view.getY() + " " + delY);
+                        rootLayout.removeView(view);
                     }
 
                     break;
