@@ -26,24 +26,33 @@ import android.widget.Toast;
 
 import com.odys.hexastle.R;
 import com.odys.hexastle.adapters.TileListAdapter;
-import com.odys.hexastle.models.Tile;
 import com.odys.hexastle.utils.AppConstants;
 import com.odys.hexastle.utils.DragDropHandler;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class TileCreatorActivity extends AppCompatActivity {
 
     private ExpandableListView tileListView;
     private ViewGroup rootLayout;
-    private List<String> categories;
-    private HashMap<String, List<Tile>> tileCategoryMap;
     private DrawerLayout drawer;
+
+    private float SCALE_BIG = 4.0f;
+    private float SCALE_OTHER1 = 3.05f;
+    private float SCALE_OTHER2 = 4.15f;
+    private float SCALE_OTHER3 = 3.42f;
+    private float SCALE_SMALL = 0.5f;
+    private ArrayList bigCategories = new ArrayList(){{
+        add("basic");
+        add("ground");
+        add("trees");
+        add("buildings");
+        add("custom");
+    }};
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -75,6 +84,40 @@ public class TileCreatorActivity extends AppCompatActivity {
             ImageView newTile = new ImageView(this);
             newTile.setImageDrawable(picked.getDrawable());
             newTile.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
+            if (picked.getTag() != null) {
+                if (picked.getTag().toString().contains("nature_extra")) {
+                    if (!picked.getTag().toString().contains("rockSmall")) {
+                        if (picked.getTag().toString().contains("rock")) {
+                            newTile.setScaleX(SCALE_BIG);
+                            newTile.setScaleY(SCALE_BIG);
+                        } else {
+                            newTile.setScaleX(SCALE_SMALL);
+                            newTile.setScaleY(SCALE_SMALL);
+                        }
+                    }
+                } else if (picked.getTag().toString().contains("basic")
+                        || picked.getTag().toString().contains("ground")
+                        || picked.getTag().toString().contains("buildings")
+                        || picked.getTag().toString().contains("trees")
+                        || picked.getTag().toString().contains("custom")) {
+                    newTile.setScaleX(SCALE_BIG);
+                    newTile.setScaleY(SCALE_BIG);
+                } else if (picked.getTag().toString().contains("roofs")) {
+                    if (picked.getTag().toString().contains("Ring")) {
+                        newTile.setScaleX(SCALE_OTHER3);
+                        newTile.setScaleY(SCALE_OTHER3);
+                    } else if(picked.getTag().toString().contains("bridge")) {
+                        newTile.setScaleX(SCALE_BIG);
+                        newTile.setScaleY(SCALE_BIG);
+                    } else if (picked.getTag().toString().contains("Pointy") || picked.getTag().toString().contains("Straight") || picked.getTag().toString().contains("Tall")) {
+                        newTile.setScaleX(SCALE_OTHER2);
+                        newTile.setScaleY(SCALE_OTHER2);
+                    } else {
+                        newTile.setScaleX(SCALE_OTHER1);
+                        newTile.setScaleY(SCALE_OTHER1);
+                    }
+                }
+            }
             rootLayout.addView(newTile);
 
             int[] screenLocation = new int[2];
@@ -85,10 +128,10 @@ public class TileCreatorActivity extends AppCompatActivity {
             float x = -1;
             float y = -1;
             while (x<0) {
-                x = screenLocation[0] + r.nextFloat() * (width - 100 - screenLocation[0]);
+                x = screenLocation[0] + r.nextFloat() * (width - 200 - screenLocation[0]);
             }
             while (y<0) {
-                y = screenLocation[1] + r.nextFloat() * (height - 150 - screenLocation[1]);
+                y = screenLocation[1] + r.nextFloat() * (height - 300 - screenLocation[1]);
             }
             newTile.setX(x);
             newTile.setY(y);

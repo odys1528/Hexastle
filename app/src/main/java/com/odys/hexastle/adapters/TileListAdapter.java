@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -96,6 +95,7 @@ public class TileListAdapter extends BaseExpandableListAdapter{
 
         ImageView tileImageView = view.findViewById(R.id.tileImageView);
         tileImageView.setImageDrawable(childImage);
+        tileImageView.setTag(tileCategoryMap.get(categories.get(i)).get(i1).getTag());
 
         return view;
     }

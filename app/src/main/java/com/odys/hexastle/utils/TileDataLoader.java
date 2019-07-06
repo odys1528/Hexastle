@@ -79,7 +79,7 @@ public class TileDataLoader {
                 for (String file : files) {
                     Drawable drawable = Drawable.createFromResourceStream(context.getResources(),
                             new TypedValue(), context.getAssets().open(s+"/"+file), null);
-                    category.add(new Tile(drawable));
+                    category.add(new Tile(drawable, file));
                 }
 
                 tileCategoryMap.put(s, category);
